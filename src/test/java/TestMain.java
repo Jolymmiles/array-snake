@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Locale;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestMain {
@@ -33,10 +35,14 @@ public class TestMain {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 
         Main.main(null);
-        String expected = "1\t2\t3\t4\t5\t\r\n10\t9\t8\t7\t6\t\r\n11\t12\t13\t14\t15\t\r\n20\t19\t18\t17\t16\t";
-        String actual = outContent.toString();
+        int[] expected = new int[]{1, 2, 3, 4, 5, 10, 9, 8, 7, 6, 11, 12, 13, 14, 15, 20, 19, 18, 17, 16};
+        int[] actual = Arrays.stream(
+                outContent.toString()
+                        .replaceAll("[\\r\\n]", "")
+                        .split("\\t")
+        ).mapToInt(Integer::parseInt).toArray();
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -45,10 +51,14 @@ public class TestMain {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 
         Main.main(null);
-        String expected = "1\t2\t\r\n4\t3\t";
-        String actual = outContent.toString();
+        int[] expected = new int[]{1, 2, 4, 3};
+        int[] actual = Arrays.stream(
+                outContent.toString()
+                        .replaceAll("[\\r\\n]", "")
+                        .split("\\t")
+        ).mapToInt(Integer::parseInt).toArray();
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -57,10 +67,14 @@ public class TestMain {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 
         Main.main(null);
-        String expected = "1\t2\t\r\n4\t3\t\r\n5\t6\t\r\n8\t7\t\r\n9\t10\t\r\n12\t11\t\r\n13\t14\t\r\n16\t15\t\r\n17\t18\t\r\n20\t19\t";
-        String actual = outContent.toString();
+        int[] expected = new int[]{1, 2, 4, 3, 5, 6, 8, 7, 9, 10, 12, 11, 13, 14, 16, 15, 17, 18, 20, 19};
+        int[] actual = Arrays.stream(
+                outContent.toString()
+                        .replaceAll("[\\r\\n]", "")
+                        .split("\\t")
+        ).mapToInt(Integer::parseInt).toArray();
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -69,10 +83,14 @@ public class TestMain {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 
         Main.main(null);
-        String expected = "1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t\r\n20\t19\t18\t17\t16\t15\t14\t13\t12\t11\t";
-        String actual = outContent.toString();
+        int[] expected = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11};
+        int[] actual = Arrays.stream(
+                outContent.toString()
+                        .replaceAll("[\\r\\n]", "")
+                        .split("\\t")
+        ).mapToInt(Integer::parseInt).toArray();
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -81,10 +99,14 @@ public class TestMain {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
 
         Main.main(null);
-        String expected = "1\t2\t3\t\r\n6\t5\t4\t\r\n7\t8\t9\t";
-        String actual = outContent.toString();
+        int[] expected = new int[]{1, 2, 3, 6, 5, 4, 7, 8, 9};
+        int[] actual = Arrays.stream(
+                outContent.toString()
+                        .replaceAll("[\\r\\n]", "")
+                        .split("\\t")
+        ).mapToInt(Integer::parseInt).toArray();
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
 }
